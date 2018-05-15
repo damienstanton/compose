@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+  
+  web:
+    build: ./django
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./django:/myapp
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: always
+  
+  apache:
+    build: ./apache
+    JDBC_URL: #TODO: setup the apache-specific db
+    JDBC_USER: postgres
+    JDBC_OASS: postgres
+    volumes:
+      - ./apache/webapps:/usr/local/tomcat/webapps
+    depends_on:
+      - db
+    restart: always

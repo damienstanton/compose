@@ -1,0 +1,8 @@
+# demo stuff
+django
+psycopg2
+
+
+# formatting/linting
+yapf
+pylint
